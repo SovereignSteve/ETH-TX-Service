@@ -1,0 +1,858 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "iteration": 1653018718235,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "aliasColors": {
+        "Total Received": "green",
+        "Total Sent": "red"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "postgres",
+        "uid": "E8EU-gu7z"
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 2,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "E8EU-gu7z"
+          },
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "0"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__unixEpochGroupAlias(tx_time,$__interval,0),\n  sum(value) AS \"Total Sent\"\nFROM transactions\nWHERE\n  tx_from = address AND\n  address = '$Address'\nGROUP BY 1\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Total Sent"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "transactions",
+          "timeColumn": "tx_time",
+          "timeColumnType": "int8",
+          "where": [
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "tx_from",
+                "=",
+                "address"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "address",
+                "=",
+                "'$Address'"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "E8EU-gu7z"
+          },
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "0"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__unixEpochGroupAlias(tx_time,$__interval,0),\n  sum(value) AS \"Total Received\"\nFROM transactions\nWHERE\n  tx_to = address AND\n  address = '$Address'\nGROUP BY 1\nORDER BY 1",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Total Received"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "transactions",
+          "timeColumn": "tx_time",
+          "timeColumnType": "int8",
+          "where": [
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "tx_to",
+                "=",
+                "address"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "address",
+                "=",
+                "'$Address'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Value I/O",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:4384",
+          "format": "none",
+          "label": "",
+          "logBase": 1,
+          "show": false
+        },
+        {
+          "$$hashKey": "object:4385",
+          "format": "short",
+          "logBase": 1,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "E8EU-gu7z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 25,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "E8EU-gu7z"
+          },
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "address",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__unixEpochGroupAlias(tx_time,$__interval),\n  address AS metric,\n  sum(count(blocknumber)) OVER (PARTITION BY address ORDER BY $__unixEpochGroup(tx_time,$__interval)) AS \"count\"\nFROM transactions\nWHERE\n  $__unixEpochFilter(tx_time) AND\n  address = '$Address'\nGROUP BY 1,2\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "blocknumber"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "window"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "transactions",
+          "timeColumn": "tx_time",
+          "timeColumnType": "int8",
+          "where": [
+            {
+              "name": "$__unixEpochFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "address",
+                "=",
+                "'$Address'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "Total Transactions Over Time",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "E8EU-gu7z"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepBefore",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "percent"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "Gwei"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "E8EU-gu7z"
+          },
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "address",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__unixEpochGroupAlias(tx_time,$__interval),\n  address AS metric,\n  avg(gasused) AS \"gas used\"\nFROM transactions\nWHERE\n  $__unixEpochFilter(tx_time) AND\n  address = '$Address'\nGROUP BY 1,2\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "gasused"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "gas used"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "transactions",
+          "timeColumn": "tx_time",
+          "timeColumnType": "int8",
+          "where": [
+            {
+              "name": "$__unixEpochFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "address",
+                "=",
+                "'$Address'"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "E8EU-gu7z"
+          },
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "metricColumn": "address",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__unixEpochGroupAlias(tx_time,$__interval),\n  address AS metric,\n  max(gas) AS \"max gas\"\nFROM transactions\nWHERE\n  $__unixEpochFilter(tx_time) AND\n  address = '$Address'\nGROUP BY 1,2\nORDER BY 1,2",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "gas"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "max"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "max gas"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "transactions",
+          "timeColumn": "tx_time",
+          "timeColumnType": "int8",
+          "where": [
+            {
+              "name": "$__unixEpochFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "address",
+                "=",
+                "'$Address'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "Gas Usage / Time",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "E8EU-gu7z"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "noValue": "-",
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "orange",
+                "value": 85
+              },
+              {
+                "color": "red",
+                "value": 95
+              }
+            ]
+          },
+          "unit": "%"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 12,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^percent$/",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "8.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "E8EU-gu7z"
+          },
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "0"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "metricColumn": "address",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__unixEpochGroupAlias(tx_time,$__interval,0),\n  address AS metric,\n  avg(gasused) AS \"recent gas consumption\"\nFROM transactions\nWHERE\n  $__unixEpochFilter(tx_time) AND\n  address = '$Address'\nGROUP BY 1,2\nORDER BY 1,2",
+          "refId": "avg",
+          "select": [
+            [
+              {
+                "params": [
+                  "gasused"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "recent gas consumption"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "transactions",
+          "timeColumn": "tx_time",
+          "timeColumnType": "int8",
+          "where": [
+            {
+              "name": "$__unixEpochFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "address",
+                "=",
+                "'$Address'"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "E8EU-gu7z"
+          },
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "0"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "metricColumn": "address",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__unixEpochGroupAlias(tx_time,$__interval,0),\n  address AS metric,\n  max(gas) AS \"gas\"\nFROM transactions\nWHERE\n  $__unixEpochFilter(tx_time) AND\n  address = '$Address'\nGROUP BY 1,2\nORDER BY 1,2",
+          "refId": "max",
+          "select": [
+            [
+              {
+                "params": [
+                  "gas"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "max"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "gas"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "transactions",
+          "timeColumn": "tx_time",
+          "timeColumnType": "int8",
+          "where": [
+            {
+              "name": "$__unixEpochFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "address",
+                "=",
+                "'$Address'"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "($avg/$max) * 100",
+          "hide": false,
+          "refId": "percent",
+          "type": "math"
+        }
+      ],
+      "title": "Mean Gas Usage",
+      "transformations": [],
+      "type": "gauge"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "0xe592427a0aece92de3edee1f18e0157c05861564",
+          "value": "0xe592427a0aece92de3edee1f18e0157c05861564"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "E8EU-gu7z"
+        },
+        "definition": "select distinct address from transactions",
+        "description": "Address Filter",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Address",
+        "multi": false,
+        "name": "Address",
+        "options": [],
+        "query": "select distinct address from transactions",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "2021-05-06T10:16:51.449Z",
+    "to": "2021-05-06T11:17:16.702Z"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Internal Transactions Dashboard",
+  "uid": "4geFIou7k",
+  "version": 26,
+  "weekStart": ""
+}
