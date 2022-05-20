@@ -77,15 +77,21 @@ class ServiceEngine(object):
             pgdb.close()
 
    def run(self):  
+      invalidEntry = False
+
       while not engine.shutdown:
-         endpointUrl = self.generateEndpointUrl()
-         responseData = self.performRequest(endpointUrl)    
-         if responseData is not None:  
-            self.archiveResponse(responseData)               
-         #printInfo(json.dumps(responseData, sort_keys=True, indent=4)) 
-         #printDetail("\n" + str(self.performRequest.cache_info())) 
+
+         if not invalidEntry:
+            endpointUrl = self.generateEndpointUrl()
+            responseData = self.performRequest(endpointUrl)    
+            if responseData is not None:  
+               self.archiveResponse(responseData)               
+            #printInfo(json.dumps(responseData, sort_keys=True, indent=4)) 
+            #printDetail("\n" + str(self.performRequest.cache_info())) 
+            
          userInput = input("Enter next address|page|offset:")   
-         
+         invalidEntry = False
+      
          if userInput.lower() == "quit" or userInput.lower() == "q":
             printInfo("User quit...")
             engine.startShutdown()
@@ -109,7 +115,8 @@ class ServiceEngine(object):
 
                elif engine.shutdown == False:
                   printWarn("Invalid Entry!\nTry page=1 or offset=100 or +-")      
- 
+                  invalidEntry = True
+      
 engine = ServiceEngine(config.defaults.apikey, config.defaults.address, config.defaults.page, config.defaults.offset)
 engine.run()
 
