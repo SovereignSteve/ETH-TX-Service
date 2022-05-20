@@ -63,11 +63,7 @@ class ServiceEngine(object):
       
       printInfo("Archiving (" + str(len(txData)) + ") internal transactions!")
 	  
-<<<<<<< HEAD
       try:             
-=======
-      try:    
->>>>>>> 3a33d2dcab02ab9ae601c6eb22b9e53c3b2ac5db
          pgdb = psycopg2.connect(database=config.database.name, 
                                      user=config.database.user, password=config.database.pw, host=config.database.host, port=config.database.port)
          pgdb.autocommit = True
@@ -78,11 +74,7 @@ class ServiceEngine(object):
          print(error)
       finally:
          if pgdb is not None:
-<<<<<<< HEAD
             pgdb.close()
-=======
-               pgdb.close()
->>>>>>> 3a33d2dcab02ab9ae601c6eb22b9e53c3b2ac5db
 
    def run(self):  
       while not engine.shutdown:
