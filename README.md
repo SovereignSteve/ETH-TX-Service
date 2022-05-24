@@ -44,6 +44,7 @@ Navigate to the **eth-tx-service** root directory.
 
 ## Project Future Roadmap
 * Security missing across the board
+* Unit Tests missing
 * More types of data sources to make more interesting correlations.
 * CI/CD Scripting when/if the project reaches a sufficient size
 * The 'service' is a dumb command line driven interface which is absolutely impractical but satisfies the project's basic needs.  A more sophisticated presentation/wizard would scale more organically with business needs.
