@@ -16,8 +16,9 @@ class ServiceEngine(object):
       self.apikey = apikey
       self.address = address
       self.page = page
-      self.offset = offset      
-
+      self.offset = offset
+      
+      printDetail("ETH Monitoring Service\nAt any time type 'q' to exit...\n")
       printDetail("Database Connection String(database=" + config.database.name + ", user=" + config.database.user + ", host=" + 
       config.database.host + ", port=" + str(config.database.port) + ")")
 
@@ -63,13 +64,13 @@ class ServiceEngine(object):
       
       printInfo("Archiving (" + str(len(txData)) + ") internal transactions!")
 	  
-      try:             
+      try:
          pgdb = psycopg2.connect(database=config.database.name, 
                                      user=config.database.user, password=config.database.pw, host=config.database.host, port=config.database.port)
          pgdb.autocommit = True
          cur = pgdb.cursor()
          cur.executemany(sql, txData)
-         cur.close()         
+         cur.close()
       except (Exception, psycopg2.DatabaseError) as error:
          print(error)
       finally:
@@ -78,7 +79,7 @@ class ServiceEngine(object):
 
    def run(self):  
       invalidEntry = False
-
+	  
       while not engine.shutdown:
 
          if not invalidEntry:

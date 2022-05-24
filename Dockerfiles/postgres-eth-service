@@ -1,0 +1,3 @@
+FROM postgres:latest
+ENV POSTGRES_PASSWORD dev
+ADD ../Sql/init-db.sql /docker-entrypoint-initdb.d/

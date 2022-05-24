@@ -1,0 +1,7 @@
+FROM python:latest
+RUN apt-get update
+RUN apt-get install vim -y
+RUN pip install --upgrade pip
+RUN pip install requests psycopg2 termcolor
+ADD ../Service/config.py /home/dev/
+ADD ../Service/service.py /home/dev/
